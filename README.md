@@ -208,7 +208,7 @@ website/
 - Python 3.10+
 - MongoDB Atlas account
 - Tesseract OCR (optional fallback; OCR fails explicitly if no engine is available)
-- Flutter 3.44+ (for mobile)
+- Flutter(Dart) 3.44+ (for mobile)
 
 ### Installation
 
