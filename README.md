@@ -31,7 +31,7 @@ Jaanatana acts as a **business-aware AI layer** on top of existing financial dat
 ### Core Pipeline
 
 ```
-Camera / Screenshot / Voice / Document
+Camera / Screenshot / Voice / Documents
             ↓
        OCR / Speech AI
             ↓
