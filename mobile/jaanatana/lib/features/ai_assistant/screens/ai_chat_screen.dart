@@ -172,7 +172,7 @@ class _AIScreenState extends ConsumerState<AIScreenPlaceholder> {
                         _sendCurrentMessage();
                       } else {
                         // Open Voice Assistant screen
-                        context.push('/app/voice');
+                        // context.push('/app/voice'); // disabled
                       }
                     },
                     child: Container(

@@ -24,9 +24,10 @@ class VoiceState {
   final VoiceStatus status;
   final String transcript;
   final String? response;
-  final List<Map<String, String>> actionButtons;
+  final List<Map<String, String>> history;
   final String? error;
   final bool isSpeaking;
+  final List<Map<String, String>> actionButtons;
   final bool isWakeWordListening;
 
   const VoiceState({
@@ -34,6 +35,7 @@ class VoiceState {
     this.transcript = '',
     this.response,
     this.actionButtons = const [],
+    this.history = const [],
     this.error,
     this.isSpeaking = false,
     this.isWakeWordListening = false,
@@ -44,6 +46,7 @@ class VoiceState {
     String? transcript,
     String? response,
     List<Map<String, String>>? actionButtons,
+    List<Map<String, String>>? history,
     String? error,
     bool? isSpeaking,
     bool? isWakeWordListening,
@@ -53,6 +56,7 @@ class VoiceState {
       transcript: transcript ?? this.transcript,
       response: response ?? this.response,
       actionButtons: actionButtons ?? this.actionButtons,
+      history: history ?? this.history,
       error: error,
       isSpeaking: isSpeaking ?? this.isSpeaking,
       isWakeWordListening: isWakeWordListening ?? this.isWakeWordListening,
@@ -131,12 +135,12 @@ class VoiceProvider extends Notifier<VoiceState> {
     });
     await _tts.speak(greeting);
 
-    // Show wake up alert
-    NotificationService().showVoiceWakeupAlert(
-      query: 'Voice Wakeup',
-      responseText: greeting,
-      language: lang.code.toLowerCase(),
-    );
+    // Auto voice wakeup alert disabled as per request.
+    // NotificationService().showVoiceWakeupAlert(
+    //   query: 'Voice Wakeup',
+    //   responseText: greeting,
+    //   language: lang.code.toLowerCase(),
+    // );
   }
 
   Future<void> speakCurrentResponse() async {
@@ -331,21 +335,22 @@ class VoiceProvider extends Notifier<VoiceState> {
           }
         }
       }
-      if (actions.isEmpty) {
-        actions.addAll([
-          {'label': AppTranslations.get('view_details', lang.code), 'route': '/app/transactions'},
-          {'label': AppTranslations.get('show_reports', lang.code), 'route': '/app/reports'},
-          {'label': AppTranslations.get('set_reminder', lang.code), 'route': '/app/reminders'},
-          {'label': AppTranslations.get('check_cash_flow', lang.code), 'route': '/app/cash-flow'},
-        ]);
-      }
+        // No fallback actions; keep empty list if none provided.
+        if (actions.isEmpty) {
+          // leave actions empty
+        }
 
-      state = state.copyWith(
-        status: VoiceStatus.responded,
-        response: answer,
-        actionButtons: actions,
-        error: null,
-      );
+        // Append current interaction to history
+        final newHistory = List<Map<String, String>>.from(state.history)
+          ..add({'transcript': clean, 'response': answer});
+
+        state = state.copyWith(
+          status: VoiceStatus.responded,
+          response: answer,
+          actionButtons: actions,
+          history: newHistory,
+          error: null,
+        );
 
       // If a transaction was created by voice, refresh transactions and home providers
       if (intent == 'record_transaction') {
@@ -395,4 +400,3 @@ class VoiceProvider extends Notifier<VoiceState> {
 
 final voiceProvider =
     NotifierProvider<VoiceProvider, VoiceState>(VoiceProvider.new);
-

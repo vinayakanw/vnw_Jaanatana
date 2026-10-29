@@ -7,6 +7,7 @@ import 'package:jaanatana/core/localization/app_translations.dart';
 import 'package:jaanatana/core/providers/language_provider.dart';
 import 'package:jaanatana/core/widgets/app_card.dart';
 import 'package:jaanatana/features/auth/presentation/providers/auth_provider.dart';
+import 'package:jaanatana/features/voice/providers/voice_provider.dart';
 
 class SettingsScreenPlaceholder extends ConsumerStatefulWidget {
   const SettingsScreenPlaceholder({super.key});
@@ -116,11 +117,33 @@ class _SettingsScreenState extends ConsumerState<SettingsScreenPlaceholder> {
                     onTap: () => _showLanguageModal(context, currentLang),
                   ),
                   _buildDivider(),
-                  _buildSettingItem(
-                    icon: Icons.mic_none_rounded,
-                    title: tr('voice_assistant'),
-                    trailingBadge: tr('active'),
-                    onTap: () => context.push('/app/voice'),
+                  InkWell(
+                    onTap: () {}, // No navigation, toggle handled by Switch
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                      child: Row(
+                        children: [
+                          Icon(Icons.mic_none_rounded, size: 22, color: const Color(0xFF64748B)),
+                          const SizedBox(width: 14),
+                          Expanded(
+                            child: Text(
+                              tr('voice_assistant'),
+                              style: const TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w600,
+                                color: Color(0xFF1E293B),
+                              ),
+                            ),
+                          ),
+                          Switch(
+                            value: ref.watch(voiceProvider).isWakeWordListening,
+                            onChanged: (value) {
+                              ref.read(voiceProvider.notifier).toggleWakeWordMode(value);
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                   _buildDivider(),
                   _buildSettingItem(

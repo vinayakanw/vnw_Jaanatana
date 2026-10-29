@@ -79,11 +79,11 @@ class _VoiceScreenState extends ConsumerState<VoiceScreenPlaceholder>
     String Function(String) tr,
   ) {
     final suggestedPhrases = [
-      tr('phrase_1'),
-      tr('phrase_2'),
-      tr('phrase_3'),
-      tr('phrase_4'),
-      tr('phrase_5'),
+      'vinayaka',
+      'omkar',
+      'vikas',
+      'shashi',
+      'rekha',
     ];
 
     return SingleChildScrollView(

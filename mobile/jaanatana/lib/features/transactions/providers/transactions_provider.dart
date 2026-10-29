@@ -97,6 +97,7 @@ class TransactionsProvider extends Notifier<TransactionsState> {
       'type': type.toLowerCase(),
       'amount': amount,
       'category': category,
+      'date': DateTime.now().toIso8601String(),
     };
     if (description != null) {
       payload['description'] = description;
@@ -118,6 +119,7 @@ class TransactionsProvider extends Notifier<TransactionsState> {
       'type': type.toLowerCase(),
       'amount': amount,
       'category': category,
+      'date': DateTime.now().toIso8601String(),
     };
     if (description != null) {
       payload['description'] = description;
