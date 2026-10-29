@@ -1,4 +1,4 @@
-# VyaparAI Backend — Complete File Documentation
+# Jaanatana Backend — Complete File Documentation
 
 ## Architecture Overview
 
@@ -77,7 +77,7 @@ FastAPI Backend (app/main.py)
 
 **Contains:**
 - `MongoClient` initialization from `MONGODB_URL` env var
-- `db` — global database instance (`vyaparai` by default)
+- `db` — global database instance (`jaanatana` by default)
 - `get_database()` — accessor function
 
 **Why Used:** Single MongoDB connection reused across all services. Raises `RuntimeError` if `MONGODB_URL` not configured.
@@ -217,10 +217,10 @@ FastAPI Backend (app/main.py)
 **Contains:** `OCRService` class with:
 - `validate_file()` — validates image file size, extension, MIME type
 - `preprocess_image()` — image enhancement for better OCR
-- `extract_text()` — pytesseract OCR or simulation mode
+- `extract_text()` — extracts text from configured OCR engines
 - `_simulate_ocr()` — returns sample invoice text when tesseract unavailable
 
-**Why Used:** Handles all OCR operations. Falls back to simulation mode if tesseract not installed.
+**Why Used:** Handles OCR operations using RapidOCR, OCR.space when configured, or Tesseract.
 
 ---
 
@@ -334,7 +334,7 @@ FastAPI Backend (app/main.py)
 #### `app/services/voice_service.py`
 **Contains:** `VoiceService` with:
 - `process_query()` — main voice pipeline
-- `_is_bot_activated()` — checks for activation phrases ("VyaparAI", "hey VyaparAI", etc.)
+- `_is_bot_activated()` — checks for activation phrases ("Jaanatana", "hey Jaanatana", etc.)
 - `_remove_activation()` — strips activation phrase from query
 - `_is_morning_briefing()` — detects morning briefing intent
 - `_handle_morning_briefing()` — generates morning briefing
@@ -558,7 +558,7 @@ FastAPI Backend (app/main.py)
 
 ### Phase 2 — MongoDB Atlas ✅
 - **Files:** `app/database/mongodb.py`
-- **Features:** MongoDB connection, env validation, `vyaparai` database
+- **Features:** MongoDB connection, env validation, `jaanatana` database
 
 ### Phase 3 — JWT Authentication ✅
 - **Files:** `app/core/security.py`, `app/api/auth.py`, `app/api/users.py`
@@ -574,7 +574,7 @@ FastAPI Backend (app/main.py)
 
 ### Phase 6 — OCR Invoice Extraction ✅
 - **Files:** `app/services/ocr_service.py`, `app/services/invoice_extractor.py`, `app/api/ocr.py`
-- **Features:** Image validation, OCR extraction, regex-based field extraction, simulation mode
+- **Features:** Image validation, OCR extraction, regex-based field extraction
 
 ### Phase 7 — UPI Payment Intelligence ✅
 - **Files:** `app/services/payment_extractor.py`, `app/services/invoice_matching.py`, `app/services/payment_processing.py`
@@ -713,13 +713,11 @@ FastAPI Backend (app/main.py)
 | Variable | Required | Purpose |
 |----------|----------|---------|
 | `MONGODB_URL` | Yes | MongoDB Atlas connection string |
-| `DATABASE_NAME` | No | Database name (default: `vyaparai`) |
+| `DATABASE_NAME` | No | Database name (default: `jaanatana`) |
 | `JWT_SECRET` | Yes | Secret key for JWT signing |
 | `JWT_ALGORITHM` | No | JWT algorithm (default: `HS256`) |
 | `JWT_EXPIRE_MINUTES` | No | Token expiry in minutes (default: `60`) |
-| `OCR_SIMULATION_MODE` | No | Enable OCR simulation (default: `false`) |
 | `TESSERACT_CMD` | No | Path to tesseract binary |
-| `VOICE_SIMULATION_MODE` | No | Enable voice simulation (default: `true`) |
 
 ---
 

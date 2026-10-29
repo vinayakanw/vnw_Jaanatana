@@ -1,0 +1,24 @@
+import 'package:jaanatana/features/reports/data/datasources/reports_remote_datasource.dart';
+import 'package:jaanatana/features/reports/data/models/financial_report_model.dart';
+import 'package:jaanatana/features/reports/repositories/reports_repository.dart';
+
+class ReportsRepositoryImpl implements ReportsRepository {
+  final ReportsRemoteDataSource remoteDataSource;
+
+  ReportsRepositoryImpl(this.remoteDataSource);
+
+  @override
+  Future<FinancialReportModel> getReport({String period = 'month'}) {
+    return remoteDataSource.getReport(period: period);
+  }
+
+  @override
+  Future<String> exportReportCsv({String period = 'month'}) {
+    return remoteDataSource.exportReportCsv(period: period);
+  }
+
+  @override
+  Future<List<int>> downloadReportPdf({String period = 'month'}) {
+    return remoteDataSource.downloadReportPdf(period: period);
+  }
+}

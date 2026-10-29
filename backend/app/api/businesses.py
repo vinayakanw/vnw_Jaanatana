@@ -42,8 +42,8 @@ def get_user_businesses(current_user=Depends(get_current_user)):
     businesses = list(db.businesses.find({"owner_id": user_id}))
     if not businesses:
         default_biz = business_document(
-            name="Vyapar Business",
-            business_type="Retail",
+            name="My Business",
+            business_type="General",
             owner_id=user_id,
         )
         res = db.businesses.insert_one(default_biz)
@@ -53,8 +53,8 @@ def get_user_businesses(current_user=Depends(get_current_user)):
     return [
         {
             "id": str(b["_id"]),
-            "name": b.get("name", "Vyapar Business"),
-            "business_type": b.get("business_type", "Retail"),
+            "name": b.get("name", "My Business"),
+            "business_type": b.get("business_type", "General"),
         }
         for b in businesses
     ]

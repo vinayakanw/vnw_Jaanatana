@@ -1,12 +1,12 @@
-# VyaparAI — AI Financial Copilot for Small Businesses
+# Jaanatana — AI Financial Copilot for Small Businesses
 
 <p align="center">
   <strong>Your Business Brain in Your Pocket</strong>
 </p>
 
-VyaparAI is an AI-powered financial copilot built specifically for small Indian businesses. It transforms fragmented financial information — UPI screenshots, invoices, receipts, voice notes, and handwritten records — into structured, actionable business intelligence.
+Jaanatana is an AI-powered financial copilot built specifically for small Indian businesses. It transforms fragmented financial information — UPI screenshots, invoices, receipts, voice notes, and handwritten records — into structured, actionable business intelligence.
 
-Instead of forcing business owners to manually maintain complicated accounting records, VyaparAI understands their existing financial data and lets them simply ask questions to get answers.
+Instead of forcing business owners to manually maintain complicated accounting records, Jaanatana understands their existing financial data and lets them simply ask questions to get answers.
 
 ---
 
@@ -26,7 +26,7 @@ This fragmentation makes it extremely difficult to make informed financial decis
 
 ## Solution
 
-VyaparAI acts as a **business-aware AI layer** on top of existing financial data. It captures information from multiple sources, extracts structured data, reconciles transactions, and provides natural-language answers through both chat and voice.
+Jaanatana acts as a **business-aware AI layer** on top of existing financial data. It captures information from multiple sources, extracts structured data, reconciles transactions, and provides natural-language answers through both chat and voice.
 
 ### Core Pipeline
 
@@ -66,7 +66,6 @@ Camera / Screenshot / Voice / Document
 - **Payment extraction** — amount, sender/receiver, reference, status, direction
 - **Duplicate detection** — prevent duplicate invoices and payments
 - **Invoice matching** — match payments to outstanding invoices automatically
-- **Simulation mode** — test without Tesseract installed
 
 ### Financial Management
 - **Invoice lifecycle** — create, update, track, and manage invoices
@@ -95,7 +94,7 @@ Camera / Screenshot / Voice / Document
 
 ### AI Copilot & Voice
 - **Text Q&A** — ask about profit, income, expenses, cash position, receivables, liabilities, invoices, customer balances
-- **Voice assistant** — "Hey VyaparAI" wake phrase, trilingual support
+- **Voice assistant** — "Hey Jaanatana" wake phrase, trilingual support
 - **Morning briefing** — spoken-style financial summary with notifications
 - **Intent classification** — rule-based + Google Gemini NLP
 - **Trilingual UI** — English, Hindi, Kannada with 100% parity
@@ -150,7 +149,6 @@ backend/
     ├── database/
     │   ├── mongodb.py             # MongoDB connection
     │   ├── indexes.py             # Database indexes
-    │   └── seed.py                # Default data seeding
     ├── models/                    # Document builders
     ├── schemas/                   # Pydantic schemas
     ├── services/                  # Business logic
@@ -173,7 +171,7 @@ backend/
     └── main.py                    # FastAPI application
 
 mobile/
-└── vypara_ai/
+└── jaanatana/
     └── lib/
         ├── main.dart
         ├── app/                  # App shell, routing, theme
@@ -209,15 +207,15 @@ website/
 
 - Python 3.10+
 - MongoDB Atlas account
-- Tesseract OCR (optional, simulation mode available)
+- Tesseract OCR (optional fallback; OCR fails explicitly if no engine is available)
 - Flutter 3.44+ (for mobile)
 
 ### Installation
 
 ```bash
 # Clone repository
-git clone https://github.com/VINAYAKANWALISHETTAR/VyaparAI.git
-cd VyaparAI/backend
+git clone https://github.com/vinayakanw/vnw_Jaanatana.git
+cd vnw_Jaanatana/backend
 
 # Create virtual environment
 python -m venv venv
@@ -230,15 +228,22 @@ pip install -r requirements.txt
 
 ### Environment Setup
 
-Create `.env` file in `backend/app/`:
+Create a `.env` file in `backend/`:
 
 ```env
 MONGODB_URL=mongodb+srv://<user>:<password>@cluster0.s4ybtgh.mongodb.net/?appName=Cluster0
-DATABASE_NAME=vyaparai
+DATABASE_NAME=jaanatana
 JWT_SECRET=your-secret-key-here
 JWT_ALGORITHM=HS256
 JWT_EXPIRE_MINUTES=1440
 ```
+
+The mobile app temporarily uses the existing deployed API host because the
+Jaanatana API has not been deployed yet. The backend defaults to the new,
+empty `jaanatana` database. Existing records remain untouched in the previous
+database and are not copied automatically.
+If an account has no business yet, the API creates an empty "My Business"
+workspace; no sample financial records are seeded.
 
 ### Running the Server
 
@@ -248,18 +253,6 @@ uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
 Server will start at `http://localhost:8000`
-
-### OCR Simulation Mode
-
-For testing without Tesseract:
-
-```bash
-# Windows PowerShell
-$env:OCR_SIMULATION_MODE="true"
-
-# Linux/Mac
-export OCR_SIMULATION_MODE=true
-```
 
 ---
 
@@ -394,8 +387,7 @@ curl -X GET "http://localhost:8000/financials/report-pdf/month" \
 ## Testing
 
 ```bash
-# Run with simulation mode
-$env:OCR_SIMULATION_MODE="true"
+# Start backend with MongoDB and a real OCR engine configured
 python -m uvicorn app.main:app --reload
 ```
 

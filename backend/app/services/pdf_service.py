@@ -124,7 +124,7 @@ class PDFService:
         story = []
 
         # Header Block
-        story.append(Paragraph("VyaparAI Financial Report", header_style))
+        story.append(Paragraph("Jaanatana Financial Report", header_style))
         gen_time = datetime.now(timezone.utc).strftime("%d %B %Y, %H:%M UTC")
         story.append(
             Paragraph(
@@ -276,7 +276,7 @@ class PDFService:
         story.append(HRFlowable(width="100%", thickness=0.8, color=border_color, spaceBefore=10, spaceAfter=8))
         story.append(
             Paragraph(
-                "Generated securely via VyaparAI Enterprise Financial Engine • All rights reserved.",
+                "Generated securely via Jaanatana Enterprise Financial Engine • All rights reserved.",
                 ParagraphStyle("DocFooter", parent=styles["Normal"], fontSize=8, fontName="Helvetica", textColor=text_muted, alignment=1),
             )
         )

@@ -1,10 +1,10 @@
-# VyaparAI — Project Understanding & Implementation Plan
+# Jaanatana — Project Understanding & Implementation Plan
 
 ## Product Vision
 
-VyaparAI is an AI-powered financial copilot for small Indian businesses. It converts fragmented financial information — UPI screenshots, invoices, receipts, voice notes, handwritten records — into structured data, then provides intelligent answers through chat and voice.
+Jaanatana is an AI-powered financial copilot for small Indian businesses. It converts fragmented financial information — UPI screenshots, invoices, receipts, voice notes, handwritten records — into structured data, then provides intelligent answers through chat and voice.
 
-**Core promise:** The business owner doesn't have to manually enter every transaction. They can simply ask VyaparaAI questions and receive actionable financial intelligence.
+**Core promise:** The business owner doesn't have to manually enter every transaction. They can simply ask Jaanatana questions and receive actionable financial intelligence.
 
 ---
 
@@ -38,7 +38,7 @@ VyaparAI is an AI-powered financial copilot for small Indian businesses. It conv
 - Business ownership verification
 - Invoice CRUD with payment tracking
 - Transaction CRUD with summary
-- OCR invoice extraction with simulation mode
+- OCR invoice extraction using configured OCR engines only
 - OCR payment extraction with matching + reconciliation
 - Partial payments, overpayment review, duplicate detection
 

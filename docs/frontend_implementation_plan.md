@@ -1,4 +1,4 @@
-# VyaparAI — Flutter Frontend Implementation Plan
+# Jaanatana — Flutter Frontend Implementation Plan
 
 ## GOAL
 
@@ -14,7 +14,7 @@ Build a production-oriented Flutter mobile application that:
 
 ## 1. BACKEND CAPABILITY MATRIX
 
-### Verified from: `N:\VyaparAI\backend\app\`
+### Verified from: `N:\Jaanatana\backend\app\`
 
 | Feature | Backend API Exists | Endpoint Verified | Request Schema Verified | Response Schema Verified | Flutter Ready |
 |---|---|---|---|---|---|
@@ -46,7 +46,7 @@ Build a production-oriented Flutter mobile application that:
 | Financials Anomalies | Yes | Yes | Yes | Yes | Yes |
 | Financials Insights | Yes | Yes | Yes | Yes | Yes |
 | Copilot Chat | Yes | Yes | Yes | Yes | Yes |
-| Voice Query | Yes | Yes | Yes | Yes | Simulation mode |
+| Voice Query | Yes | Yes | Yes | Yes | Live backend |
 | Reminders CRUD | Yes | Yes | Yes | Yes | Yes |
 | Morning Briefing | Yes | Yes | Yes | Yes | Yes |
 | Notifications List | Yes | Yes | Yes | Yes | Yes |
@@ -63,7 +63,7 @@ Build a production-oriented Flutter mobile application that:
 ## 2. ARCHITECTURE CONFIRMATION
 
 ### Existing foundation (do not change)
-- `lib/main.dart` — minimal entry point, `ProviderScope` + `VyparaAIApp`
+- `lib/main.dart` — minimal entry point, `ProviderScope` + `JaanatanaApp`
 - `lib/app/app.dart` — `MaterialApp.router` with theme and `GoRouter`
 - `lib/app/router.dart` — empty `GoRouter`, ready for routes
 - `lib/app/theme/` — `app_theme.dart`, `app_colors.dart`, `app_text_styles.dart`, `app_spacing.dart`
@@ -864,7 +864,7 @@ features/ai_assistant/
 - NETWORK_ERROR
 
 **Backend reality:**
-- Backend uses simulation mode for STT by default (`VOICE_SIMULATION_MODE=true`)
+- Voice queries require the live backend; no simulated response mode is enabled
 - Backend returns structured response: transcription, answer, intent, language
 - No actual TTS in backend yet — UI shows text response
 
@@ -1010,7 +1010,7 @@ features/settings/
 8. Reminders + Morning Briefing
 9. Notifications (list + mark read)
 10. AI Chat (Copilot)
-11. Voice Assistant (with simulation mode caveat)
+11. Voice Assistant (requires live backend and speech services)
 12. Settings (read-only profile/business)
 
 ### Features requiring backend first (backend gaps)
@@ -1157,7 +1157,7 @@ Until Phase 17 is complete, the Flutter app must:
 | Financial calculations | Backend only | Backend is source of truth |
 | AI responses | Backend only | Never fake or hardcode |
 | Localization | Frontend intl only | No backend localization API |
-| Voice | Backend-dependent | Simulation mode available, TTS pending |
+| Voice | Backend-dependent | Live backend response; TTS support pending |
 
 ---
 

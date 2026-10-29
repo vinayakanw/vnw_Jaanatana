@@ -223,8 +223,8 @@ def create_transaction(
         if not business_ids:
             from app.models.business import business_document
             default_biz = business_document(
-                name="Vyapar Business",
-                business_type="Retail",
+                name="My Business",
+                business_type="General",
                 owner_id=user_id,
             )
             res = db.businesses.insert_one(default_biz)

@@ -16,7 +16,7 @@ from app.api.reminders import router as reminders_router
 from app.api.notifications import router as notifications_router
 
 app = FastAPI(
-    title="VyaparAI API",
+    title="Jaanatana API",
     description="AI Financial Copilot for Small Businesses",
     version="1.0.0",
 )
@@ -31,13 +31,9 @@ app.add_middleware(
 )
 
 
-from app.database.seed import seed_default_data
-
-
 @app.on_event("startup")
 def startup_event():
     create_indexes()
-    seed_default_data()
 
 
 app.include_router(businesses_router)
@@ -56,7 +52,7 @@ app.include_router(notifications_router)
 @app.get("/")
 def root():
     return {
-        "message": "VyaparAI Backend is running"
+        "message": "Jaanatana Backend is running"
     }
 
 

@@ -458,7 +458,7 @@ class InvoiceExtractor:
             return "EUR"
         if "£" in text or "gbp" in text_lower:
             return "GBP"
-        return "INR"  # Standard default for Vyapar app
+        return "INR"  # Standard default currency for the Indian market
 
     def _extract_line_items(self, text: str) -> List[Dict[str, Any]]:
         """

@@ -11,7 +11,7 @@ except Exception:
 load_dotenv()
 
 MONGODB_URL = os.getenv("MONGODB_URL")
-DATABASE_NAME = os.getenv("DATABASE_NAME", "vyaparai")
+DATABASE_NAME = os.getenv("DATABASE_NAME", "jaanatana")
 
 if not MONGODB_URL:
     raise RuntimeError("MONGODB_URL is not configured")
@@ -23,7 +23,6 @@ db_connection_error = None
 mongo_kwargs = {
     "serverSelectionTimeoutMS": 30000,
     "connectTimeoutMS": 30000,
-    "tlsAllowInvalidCertificates": True,
 }
 if ca_file:
     mongo_kwargs["tlsCAFile"] = ca_file
@@ -42,7 +41,6 @@ except Exception as e:
         client = MongoClient(
             MONGODB_URL,
             tls=True,
-            tlsAllowInvalidCertificates=True,
             serverSelectionTimeoutMS=30000,
             connectTimeoutMS=30000,
         )
@@ -54,17 +52,8 @@ except Exception as e:
         print(f"Successfully connected to MongoDB Atlas via TLS fallback ({DATABASE_NAME})")
     except Exception as e2:
         db_connection_error = f"Atlas connection failed: {e2}"
-        print(f"WARNING: Could not connect to MongoDB Atlas ({e2}). Checking mock DB fallback.")
-        try:
-            import mongomock
-            client = mongomock.MongoClient()
-            db = client[DATABASE_NAME]
-            db_connection_status = "fallback_mock"
-            db_connection_type = "mongomock"
-            print("CRITICAL NOTICE: Running on in-memory mongomock. Data will NOT persist across restarts! Please verify MongoDB Atlas IP Access List.")
-        except Exception as e3:
-            db_connection_status = "failed"
-            raise RuntimeError(f"Could not connect to MongoDB Atlas and mongomock is not available: {e2}, {e3}")
+        db_connection_status = "failed"
+        raise RuntimeError(f"Could not connect to MongoDB Atlas: {e2}") from e2
 
 
 def init_db_indexes(database):
@@ -102,11 +91,10 @@ def get_database():
 
 
 def get_db_diagnostics():
-    is_mock = "mongomock" in db.client.__class__.__module__
     return {
         "database": db.name,
         "status": db_connection_status,
         "connection_type": db_connection_type,
-        "is_mock": is_mock,
+        "is_mock": False,
         "error": db_connection_error,
     }

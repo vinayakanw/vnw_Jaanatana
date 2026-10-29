@@ -1,4 +1,3 @@
-import os
 import time
 from typing import Optional
 
@@ -8,19 +7,16 @@ from app.services.reminder_service import reminder_service
 
 class VoiceService:
     BOT_ACTIVATION = [
-        "vyaparai",
-        "vyapara ai",
-        "vyapar ai",
-        "vyapar",
-        "hey vyaparai",
-        "hi vyaparai",
-        "hello vyaparai",
-        "vyaparai please",
-        "vyaparai help",
+        "jaanatana",
+        "jaana tana",
+        "hey jaanatana",
+        "hi jaanatana",
+        "hello jaanatana",
+        "jaanatana please",
+        "jaanatana help",
     ]
 
     def __init__(self):
-        self._simulation_mode = os.getenv("VOICE_SIMULATION_MODE", "true").lower() == "true"
         self._recent_queries: dict[str, tuple[float, dict]] = {}
 
     def process_query(self, text: str, user_id: str, business_id: str | None = None, language: str | None = None) -> dict:
@@ -119,7 +115,7 @@ class VoiceService:
             else:
                 return {
                     "transcription": text,
-                    "answer": "Hello! I am your VyaparAI bot. You don't have any business set up yet. Please create a business first.",
+                    "answer": "Hello! I am your Jaanatana bot. You don't have any business set up yet. Please create a business first.",
                     "intent": "morning_briefing",
                     "language": language,
                     "action_buttons": [],

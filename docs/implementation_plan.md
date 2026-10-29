@@ -1,4 +1,4 @@
-# VyaparAI — Backend Implementation Plan
+# Jaanatana — Backend Implementation Plan
 
 ## Backend Vision
 
@@ -203,7 +203,7 @@ Separate repo/directory:
 
 ## MongoDB Collections
 
-vyaparai
+jaanatana
 ├── users
 ├── businesses
 ├── business_members

@@ -1,3 +1,5 @@
+from datetime import date
+
 from fastapi import APIRouter, Depends, HTTPException, Query, Response, status
 
 from app.core.security import get_current_user
@@ -237,7 +239,7 @@ def get_report_pdf_period(
         content=pdf_bytes,
         media_type="application/pdf",
         headers={
-            "Content-Disposition": f'attachment; filename="vyapar_financial_report_{period}.pdf"',
+            "Content-Disposition": f'attachment; filename="jaanatana_financial_report_{period}.pdf"',
             "Content-Type": "application/pdf",
         },
     )
@@ -424,7 +426,7 @@ def export_financial_report_csv(
     writer = csv.writer(output)
 
     # Header section
-    writer.writerow(["VYAPARAI FINANCIAL STATEMENT & REPORT"])
+    writer.writerow(["JAANATANA FINANCIAL STATEMENT & REPORT"])
     writer.writerow(["Business Name", business_name])
     writer.writerow(["Period", period.capitalize()])
     writer.writerow(["Generated Date", datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")])
@@ -462,7 +464,7 @@ def export_financial_report_csv(
         ])
 
     csv_content = output.getvalue()
-    filename = f"vyapar_financial_report_{period}_{datetime.now().strftime('%Y%m%d')}.csv"
+    filename = f"jaanatana_financial_report_{period}_{datetime.now().strftime('%Y%m%d')}.csv"
 
     return Response(
         content=csv_content,
@@ -472,4 +474,3 @@ def export_financial_report_csv(
             "Access-Control-Expose-Headers": "Content-Disposition",
         },
     )
-
